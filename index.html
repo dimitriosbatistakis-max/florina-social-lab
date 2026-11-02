@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="el">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Florina Social Lab | Challenge 01</title>
+<style>
+:root{--navy:#102e4b;--blue:#245f86;--cream:#fcf9f2;--orange:#e99a50;--ink:#17344b;--muted:#526a7a;--line:#cdd9df;--ok:#126849;--bad:#8c3c2f}
+*{box-sizing:border-box}body{margin:0;background:#e9eff1;font:16px/1.5 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:var(--ink)}header{background:var(--navy);color:#fff;padding:20px max(18px,calc((100vw - 1030px)/2))}header .eyebrow{font-size:.78rem;color:#ffc48e;letter-spacing:.07em;font-weight:700}header h1{font-size:clamp(1.5rem,4vw,2.3rem);margin:4px 0}header p{color:#e3ebf0;margin:4px 0 0}
+main{max-width:1030px;padding:20px 16px 70px;margin:auto}.bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px}.bar button,.btn{border-radius:10px;background:#fff;border:1px solid #b7cbd3;padding:10px 14px;color:var(--navy);font-weight:700;cursor:pointer}.bar button[aria-pressed=true]{background:var(--navy);color:white}.btn.primary{background:var(--blue);color:white;border:0} .box{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:16px;box-shadow:0 4px 18px #102e4b09}.tag{display:inline-block;background:#fff2e3;color:#7c4518;border-radius:9px;padding:4px 9px;font-size:.75rem;font-weight:800}.hero{background:linear-gradient(120deg,#153e61,#2c6585);color:#fff}.hero p{color:#e4eef3}h2{font-size:1.25rem;margin:0 0 10px}h3{margin:0 0 8px;font-size:1.08rem}.muted{color:var(--muted)}.small{font-size:.85rem} .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:680px){.row{grid-template-columns:1fr}.bar button{flex:1}} .shop{border:2px solid #d3dee5;border-radius:14px;overflow:hidden;background:var(--cream)}.shop-head{background:#f4d7ad;padding:20px}.shop-body{padding:16px}.shop h2{font-size:1.65rem;margin:0}.pill{display:inline-block;background:#fff;border-radius:99px;padding:3px 10px;font-size:.8rem;color:var(--ink)}.fact{padding:8px 0;border-bottom:1px dashed #c7d3da}.fact:last-child{border:0}.odd{color:var(--bad);font-weight:700}label{display:block;font-weight:650;margin:12px 0 4px}input,textarea,select{width:100%;font:inherit;border:1px solid #a8bdc6;border-radius:10px;padding:11px;background:#fff}textarea{min-height:85px;resize:vertical}fieldset{border:1px solid var(--line);border-radius:12px;margin:14px 0;padding:13px}legend{font-weight:750}fieldset label{font-weight:400;margin:6px 0}input[type=radio],input[type=checkbox]{width:auto}.answer{border-left:4px solid var(--ok);padding:12px;background:#eaf6ef;margin-top:12px;border-radius:7px}.hidden{display:none!important}.switch{display:flex;align-items:center;gap:10px}.switch input{width:auto}.result{white-space:pre-wrap;background:#edf4f7;border-radius:12px;padding:12px}footer{font-size:.85rem;color:var(--muted);margin-top:22px}code{overflow-wrap:anywhere;font-size:.9em;background:#edf2f4;border-radius:5px;padding:2px 5px}.note{padding:12px;border-radius:10px;background:#fff5e9;color:#6b491c}
+</style>
+</head>
+<body>
+<header><div class="eyebrow">ΦΛΩΡΙΝΑ · INTERACTIVE SOCIAL LAB · CHALLENGE 01</div>
+<h1>Ο ίδιος χώρος. Δύο διαφορετικοί πελάτες.</h1>
+<p>Ανακάλυψε τι δεν λειτουργεί σε μια υποθετική ψηφιακή παρουσία και πρότεινε συγκεκριμένες λύσεις.</p></header>
+<main>
+<div class="bar" role="group" aria-label="Ενότητες">
+<button id="tab1" aria-pressed="true" onclick="tab(1)">1 · Έρευνα</button><button id="tab2" aria-pressed="false" onclick="tab(2)">2 · Στόχευση</button><button id="tab3" aria-pressed="false" onclick="tab(3)">3 · Tech challenge</button></div>
+<section id="s1">
+<div class="box hero"><span class="tag">ΥΠΟΘΕΤΙΚΟ ΠΑΡΑΔΕΙΓΜΑ</span><h2 style="margin-top:12px">Η σελίδα που βλέπει ο πελάτης</h2><p>Έχει σχεδιαστεί σκόπιμα με προβλήματα. Δεν αντιστοιχεί σε πραγματική επιχείρηση.</p></div>
+<div class="row"><article class="shop">
+<div class="shop-head"><span class="pill">Καφές · Πρωινό</span><h2>Το Καφέ της Γειτονιάς</h2><p>«Η καλύτερη εμπειρία για όλους!»</p></div>
+<div class="shop-body">
+<div class="fact"><strong>Σήμερα:</strong> Ανοιχτά έως 20:00</div>
+<div class="fact"><strong>Ωράριο:</strong> Δευτέρα–Σάββατο 07:00–17:00 · Κυριακή κλειστά</div>
+<div class="fact"><strong>Προσφορά:</strong> «Πρωινό μέχρι τις 12:00»</div>
+<div class="fact"><strong>Παραγγελίες:</strong> «Πατήστε για να παραγγείλετε online»</div>
+<div class="fact"><strong>Κουμπί παραγγελίας:</strong> <span class="odd">Δεν υπάρχει σύνδεσμος</span></div>
+<div class="fact"><strong>Επικοινωνία:</strong> «Στείλτε μας μήνυμα» · <span class="odd">χωρίς τρόπο επικοινωνίας</span></div>
+</div></article>
+<div class="box"><h2>Αποστολή: βρες 3 ευρήματα</h2><p class="muted">Μην κρίνεις την ποιότητα του καφέ. Ελέγχεις μόνο αν οι πληροφορίες βοηθούν τον πελάτη.</p>
+<label for="f1">Εύρημα 1</label><textarea id="f1" placeholder="Ποια πληροφορία σε μπερδεύει;"></textarea>
+<label for="f2">Εύρημα 2</label><textarea id="f2" placeholder="Ποια ενέργεια δεν μπορείς να κάνεις;"></textarea>
+<label for="f3">Εύρημα 3</label><textarea id="f3" placeholder="Ποια πληροφορία λείπει;"></textarea>
+<button class="btn primary" onclick="toggle('a1')">Εμφάνιση / απόκρυψη ενδεικτικών ευρημάτων</button>
+<div id="a1" class="answer hidden">Ενδεικτικά: ασυνέπεια μεταξύ «ανοιχτά έως 20:00» και εβδομαδιαίου ωραρίου 17:00· υπόσχεση online παραγγελίας χωρίς σύνδεσμο· προτροπή για μήνυμα χωρίς εμφανή τρόπο επικοινωνίας. Δεν γνωρίζουμε ποιο πραγματικό ωράριο θα ίσχυε.</div>
+</div></div></section>
+<section id="s2" class="hidden"><div class="box"><h2>Ένας τύπος πελάτη ανά μήνυμα</h2><p>Επίλεξε ένα σενάριο. Δεν αποκλείεις τους υπόλοιπους πελάτες· απλώς σχεδιάζεις ένα μήνυμα που απαντά σε συγκεκριμένη ανάγκη.</p>
+<fieldset><legend>Ποιον στοχεύεις σε αυτή την ανάρτηση;</legend>
+<label><input type="radio" name="persona" value="Εργαζόμενος πριν τη δουλειά" checked> Εργαζόμενο που θέλει γρήγορο καφέ πριν τη δουλειά</label>
+<label><input type="radio" name="persona" value="Επισκέπτης του Σαββατοκύριακου"> Επισκέπτη που ψάχνει πρωινό το Σαββατοκύριακο</label></fieldset>
+<label for="need">Ποια είναι η βασική ανάγκη του;</label><input id="need" placeholder="π.χ. να ξέρει αν προλαβαίνει">
+<label for="info">Ποιες 3 πληροφορίες πρέπει να βρει;</label><textarea id="info" placeholder="1. ...&#10;2. ...&#10;3. ..."></textarea>
+<label for="cta">Ποιο είναι ένα σαφές, εφικτό επόμενο βήμα (CTA);</label><input id="cta" placeholder="π.χ. Δείτε ώρες και επιλογές πρωινού">
+<button class="btn primary" onclick="toggle('a2')">Εμφάνιση / απόκρυψη ιδεών</button>
+<div id="a2" class="answer hidden">Για τον εργαζόμενο: ακριβές πρωινό ωράριο, προϊόντα διαθέσιμα νωρίς, δυνατότητα take-away (μόνο εφόσον υπάρχει). Για τον επισκέπτη: ωράριο Σαββατοκύριακου, τοποθεσία, είδη πρωινού. Το CTA πρέπει να οδηγεί σε πραγματική διαθέσιμη ενέργεια.</div>
+</div></section>
+<section id="s3" class="hidden"><div class="box"><span class="tag">TECH CORNER</span><h2 style="margin-top:12px">Από πού ήρθε ο επισκέπτης;</h2>
+<p>Ο παρακάτω εκπαιδευτικός σύνδεσμος περιλαμβάνει <strong>UTM parameters</strong>:</p>
+<div class="result">https://example.com/menu?utm_source=facebook&amp;utm_medium=organic_social&amp;utm_campaign=florina_weekend</div>
+<label for="utm">Ποιο στοιχείο δηλώνει την καμπάνια;</label>
+<select id="utm"><option value="">Επιλογή…</option><option value="source">utm_source</option><option value="medium">utm_medium</option><option value="campaign">utm_campaign</option></select>
+<button class="btn primary" onclick="checkUtm()">Έλεγχος απάντησης</button><div id="utmFeedback" role="status" class="answer hidden"></div>
+<h3 style="margin-top:22px">Για προχωρημένους</h3><p>Πώς θα άλλαζε το CTA αν μετρούσαμε αιτήματα κράτησης αντί για επισκέψεις στο μενού;</p><textarea id="advanced" placeholder="Γράψε μία συγκεκριμένη πρόταση"></textarea>
+<div class="note">Οι UTM παράμετροι δεν μετρούν από μόνες τους την επισκεψιμότητα. Απαιτείται συμβατό σύστημα analytics και σωστή ρύθμιση. Ο σύνδεσμος είναι υποθετικός.</div>
+</div></section>
+<div class="box"><h2>Τι θα κρατήσουμε στο φύλλο εργασίας;</h2><p>Ένα συγκεκριμένο εύρημα, έναν επιλεγμένο πελάτη, τρεις χρήσιμες πληροφορίες και μια ενέργεια που μπορεί πράγματι να κάνει.</p>
+<button class="btn" onclick="copySummary()">Αντιγραφή των δικών μου απαντήσεων</button><div id="copyNote" class="small muted" role="status"></div>
+</div>
+<footer>Εκπαιδευτικό demo · Δεν συλλέγονται ή αποστέλλονται απαντήσεις · Τα πεδία παραμένουν μόνο στη συγκεκριμένη καρτέλα. Οι αλλαγές εδώ δεν συγχρονίζονται με άλλα κινητά. Δεν σχετίζεται με πραγματική επιχείρηση.</footer>
+</main>
+<script>
+function tab(n){for(let i=1;i<=3;i++){document.getElementById('s'+i).classList.toggle('hidden',i!==n);document.getElementById('tab'+i).setAttribute('aria-pressed',String(i===n));}window.scrollTo({top:0,behavior:'smooth'});}
+function toggle(id){document.getElementById(id).classList.toggle('hidden');}
+function checkUtm(){const v=document.getElementById('utm').value;const b=document.getElementById('utmFeedback');b.classList.remove('hidden');b.textContent=!v?'Επίλεξε μία παράμετρο.':v==='campaign'?'Σωστά: το utm_campaign προσδιορίζει το όνομα της καμπάνιας. Το utm_source δηλώνει την πηγή και το utm_medium το κανάλι/μέσο.':'Δοκίμασε ξανά: αναζήτησε την παράμετρο που προσδιορίζει το όνομα της καμπάνιας.';}
+function copySummary(){const v=id=>document.getElementById(id).value.trim()||'—';const p=document.querySelector('input[name=persona]:checked')?.value||'—';const s='Florina Social Lab — Challenge 01\nΕύρημα 1: '+v('f1')+'\nΕύρημα 2: '+v('f2')+'\nΕύρημα 3: '+v('f3')+'\nΠελάτης: '+p+'\nΑνάγκη: '+v('need')+'\n3 πληροφορίες: '+v('info')+'\nCTA: '+v('cta')+'\nAdvanced: '+v('advanced');if(navigator.clipboard?.writeText){navigator.clipboard.writeText(s).then(()=>{document.getElementById('copyNote').textContent='Οι απαντήσεις αντιγράφηκαν.';}).catch(()=>{document.getElementById('copyNote').textContent='Η αντιγραφή δεν υποστηρίζεται εδώ. Μπορείτε να σημειώσετε τις απαντήσεις στο φύλλο.';});}else{document.getElementById('copyNote').textContent='Η αντιγραφή δεν υποστηρίζεται εδώ. Μπορείτε να σημειώσετε τις απαντήσεις στο φύλλο.';}}
+</script>
+</body></html>
