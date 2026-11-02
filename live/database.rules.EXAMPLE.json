@@ -1,0 +1,22 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "liveClassroom": {
+      "class01": {
+        ".read": true,
+        ".write": "auth != null && auth.uid === 'REPLACE_WITH_INSTRUCTOR_UID'",
+        ".validate": "newData.hasChildren(['businessName','description','todayHours','weeklyHours','offer','ordering','contact'])",
+        "businessName": {".validate": "newData.isString() && newData.val().length <= 80"},
+        "description": {".validate": "newData.isString() && newData.val().length <= 250"},
+        "todayHours": {".validate": "newData.isString() && newData.val().length <= 150"},
+        "weeklyHours": {".validate": "newData.isString() && newData.val().length <= 250"},
+        "offer": {".validate": "newData.isString() && newData.val().length <= 200"},
+        "ordering": {".validate": "newData.isString() && newData.val().length <= 250"},
+        "contact": {".validate": "newData.isString() && newData.val().length <= 250"},
+        "updatedAt": {".validate": "newData.isNumber()"},
+        "$other": {".validate": false}
+      }
+    }
+  }
+}
