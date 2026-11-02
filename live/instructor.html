@@ -13,7 +13,7 @@
 <label for="contact">Επικοινωνία</label><input id="contact" maxlength="250">
 <div class="buttons"><button id="previewBtn" class="primary" type="button">Προεπισκόπηση στη δική μου οθόνη</button><button id="publishBtn" type="button" disabled>Δημοσίευση στα κινητά</button></div></form><p class="hint">Δείξε πρώτα την ελαττωματική εκδοχή. Δώσε 3–5 λεπτά για έρευνα και μετά δημοσίευσε μια διορθωμένη πληροφορία.</p></section>
 <section class="card"><h2>2 · Ασφαλής σύνδεση εισηγητή</h2><p class="hint">Το GitHub φιλοξενεί τη σελίδα. Για τις ζωντανές αλλαγές θα χρησιμοποιήσουμε Firebase Realtime Database με κανόνες που επιτρέπουν εγγραφή μόνο στον εξουσιοδοτημένο εισηγητή.</p>
-<form id="loginForm"><label for="email">Email διαχειριστή Firebase</label><input id="email" type="email" autocomplete="username" placeholder="Χρειάζεται μετά τη ρύθμιση Firebase"><label for="password">Κωδικός (δεν αποθηκεύεται στο GitHub)</label><input id="password" type="password" autocomplete="current-password"><div class="buttons"><button type="submit" id="loginBtn" disabled>Σύνδεση εισηγητή</button><button type="button" id="logoutBtn" disabled>Αποσύνδεση</button></div></form>
+<form id="loginForm"><label for="email">Email διαχειριστή Firebase</label><input id="email" type="email" autocomplete="username" required placeholder="Το email του χρήστη από Firebase Authentication → Users"><label for="password">Κωδικός (δεν αποθηκεύεται στο GitHub)</label><input id="password" type="password" autocomplete="current-password" required><div class="buttons"><button type="submit" id="loginBtn" disabled>Σύνδεση εισηγητή</button><button type="button" id="logoutBtn" disabled>Αποσύνδεση</button></div><div id="loginFeedback" role="status" aria-live="polite" class="status" style="margin:12px 0 0">Δεν έχει γίνει ακόμη σύνδεση εισηγητή.</div></form>
 <div class="warning">Μη στείλεις ποτέ κωδικό Firebase ή service-account key στο ChatGPT και μην τον αποθηκεύσεις σε δημόσιο repository. Οι μαθητές δεν χρειάζονται σύνδεση.</div></section></div>
 <div><div class="card"><h2>Προεπισκόπηση</h2><div class="preview"><span class="tag">ΥΠΟΘΕΤΙΚΟ ΠΑΡΑΔΕΙΓΜΑ</span><h3 id="vBusinessName"></h3><p id="vDescription"></p><div class="row"><strong>Σήμερα</strong><span id="vTodayHours"></span></div><div class="row"><strong>Εβδομαδιαίο ωράριο</strong><span id="vWeeklyHours"></span></div><div class="row"><strong>Προσφορά</strong><span id="vOffer"></span></div><div class="row"><strong>Παραγγελίες</strong><span id="vOrdering"></span></div><div class="row"><strong>Επικοινωνία</strong><span id="vContact"></span></div></div></div>
 <div class="card"><h2>3 · Τι βλέπουν οι συμμετέχοντες;</h2><p>Το <strong>ξεχωριστό, μόνο για ανάγνωση</strong> παράθυρο μαθητών.</p><div class="link"><a href="./" target="_blank" rel="noopener">Άνοιγμα σελίδας συμμετεχόντων</a></div><p class="hint">Στο μάθημα στέλνεις μόνο αυτή τη διεύθυνση ή το QR code. Δεν στέλνεις τη διεύθυνση διαχείρισης.</p>
@@ -38,9 +38,57 @@ const app=initializeApp(window.FLORINA_FIREBASE_CONFIG),db=getDatabase(app),auth
 let allowed=false,edited=false;
 document.getElementById("loginBtn").disabled=false;
 document.getElementById("editor").addEventListener("input",()=>{edited=true});
-onAuthStateChanged(auth,user=>{allowed=!!user && user.uid===window.FLORINA_INSTRUCTOR_UID;pub.disabled=!allowed;document.getElementById("logoutBtn").disabled=!user;status.className="status "+(allowed?"good":"");status.textContent=allowed?"Συνδεδεμένος εξουσιοδοτημένος εισηγητής. Μπορείς να δημοσιεύσεις αλλαγές.":user?"Ο λογαριασμός δεν έχει δικαιώματα εισηγητή.":"Η σύνδεση είναι έτοιμη. Συνδέσου με τον λογαριασμό εισηγητή.";});
+const loginFeedback=document.getElementById("loginFeedback");
+function showLogin(message,type=""){
+  loginFeedback.textContent=message;
+  loginFeedback.className="status"+(type?" "+type:"");
+}
+function authErrorMessage(code){
+  const errors={
+    "auth/invalid-credential":"Το email ή ο κωδικός δεν αναγνωρίστηκαν. Χρησιμοποίησε το email του Firebase Authentication → Users και τον νέο κωδικό που όρισες μετά το reset.",
+    "auth/wrong-password":"Ο κωδικός δεν αναγνωρίστηκε.",
+    "auth/user-not-found":"Δεν βρέθηκε αυτός ο χρήστης στο Firebase Authentication.",
+    "auth/invalid-email":"Έλεγξε τη μορφή του email.",
+    "auth/too-many-requests":"Έγιναν πολλές προσπάθειες. Η σύνδεση περιορίστηκε προσωρινά για λόγους ασφάλειας.",
+    "auth/network-request-failed":"Δεν ήταν δυνατή η επικοινωνία με το Firebase. Έλεγξε τη σύνδεσή σου.",
+    "auth/unauthorized-domain":"Η διεύθυνση της ιστοσελίδας δεν είναι εξουσιοδοτημένη στο Firebase Authentication → Settings → Authorized domains.",
+    "auth/operation-not-allowed":"Η σύνδεση με Email/Password δεν είναι ενεργοποιημένη στο Firebase Authentication.",
+    "auth/invalid-api-key":"Υπάρχει πρόβλημα με τη δημόσια ρύθμιση Firebase API key."
+  };
+  return (errors[code]||"Η σύνδεση απέτυχε. Έλεγξε το σφάλμα στον κώδικα και τις ρυθμίσεις Firebase.")+" ["+(code||"unknown")+"]";
+}
+onAuthStateChanged(auth,user=>{
+  allowed=!!user && user.uid===window.FLORINA_INSTRUCTOR_UID;
+  pub.disabled=!allowed;
+  document.getElementById("logoutBtn").disabled=!user;
+  const message=allowed?
+    "Επιτυχής σύνδεση! Είσαι ο εξουσιοδοτημένος εισηγητής. Μπορείς να χρησιμοποιήσεις τη «Δημοσίευση στα κινητά».":
+    user?"Έγινε σύνδεση σε Firebase, αλλά με διαφορετικό λογαριασμό από τον εξουσιοδοτημένο εισηγητή. Κάνε αποσύνδεση και χρησιμοποίησε το σωστό email.":
+    "Η σύνδεση είναι έτοιμη. Δεν έχεις συνδεθεί ακόμη ως εισηγητής.";
+  status.className="status"+(allowed?" good":user?" bad":"");
+  status.textContent=message;
+  showLogin(message,allowed?"good":user?"bad":"");
+});
 onValue(path,snap=>{if(snap.exists()&&!edited){fill({...bad,...snap.val()})}},()=>{status.className="status bad";status.textContent="Δεν είναι διαθέσιμη η ανάγνωση του Firebase. Έλεγξε τους κανόνες."});
-document.getElementById("loginForm").addEventListener("submit",async e=>{e.preventDefault();const email=document.getElementById("email").value;const pw=document.getElementById("password").value;try{await signInWithEmailAndPassword(auth,email,pw);document.getElementById("password").value=""}catch{status.className="status bad";status.textContent="Η σύνδεση απέτυχε. Έλεγξε λογαριασμό και ενεργοποίηση Email/Password."}});
+document.getElementById("loginForm").addEventListener("submit",async e=>{
+  e.preventDefault();
+  const email=document.getElementById("email").value.trim();
+  const pw=document.getElementById("password").value;
+  const btn=document.getElementById("loginBtn");
+  btn.disabled=true;
+  showLogin("Γίνεται έλεγχος στοιχείων στο Firebase…");
+  try{
+    await signInWithEmailAndPassword(auth,email,pw);
+    document.getElementById("password").value="";
+  }catch(err){
+    const message=authErrorMessage(err.code);
+    status.className="status bad";
+    status.textContent=message;
+    showLogin(message,"bad");
+  }finally{
+    btn.disabled=false;
+  }
+});
 document.getElementById("logoutBtn").addEventListener("click",()=>signOut(auth));
 pub.addEventListener("click",async()=>{if(!allowed)return;preview();pub.disabled=true;try{await set(path,{...collect(),updatedAt:Date.now()});edited=false;status.className="status good";status.textContent="Η αλλαγή αποθηκεύτηκε στο Firebase και διατίθεται στις συνδεδεμένες οθόνες.";}catch(e){status.className="status bad";status.textContent="Η δημοσίευση απορρίφθηκε: "+(e.code||"έλεγξε Security Rules");}finally{pub.disabled=!allowed}});
 }catch(err){status.className="status bad";status.textContent="Η υπηρεσία δεν φορτώθηκε. Έλεγξε τις ρυθμίσεις Firebase."}}
